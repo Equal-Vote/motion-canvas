@@ -11,11 +11,10 @@ const radialPosition = (r : number, angle : number) => {
 };
 
 export default makeScene2D(function* (view) {
-  const logger = useLogger();
-
   let candidates: Candidate[] = [];
   let lines: Line[] = [];
   let title = createRef<Txt>();
+  let candidateGroup = createRef<Rect>();
   const candidateNames = ['leia', 'luke', 'solo', 'vader', 'c3po'];
 
   view.add(
@@ -28,13 +27,17 @@ export default makeScene2D(function* (view) {
       />
       <Txt
         {...TitleFont}
-        position={[0, -450]}
+        position={[0, -400]}
         opacity={0}
         ref={title}
       >
         Condorcet Winner
       </Txt>
-      {range(5).map(i => 
+      <Rect
+        y={50}
+        ref={candidateGroup}
+      >
+        {range(5).map(i => 
           <Candidate
             position={[0,0]}
             ref={makeRef(candidates, i)}
@@ -42,11 +45,15 @@ export default makeScene2D(function* (view) {
             opacity={0}
             candidateName={candidateNames[i]}
           />
-      )}
+        )}
+      </Rect>
     </>
   );
 
-  yield* title().opacity(1, 1);
+  yield* all(
+    title().opacity(1, 1),
+    title().y(-450, 1)
+  );
   yield* all(
     ...candidates.map((candidate, i) => [
         candidate.position({...radialPosition(300, 90-i*(360 / candidates.length))}, 1, easeOutCubic),
@@ -56,7 +63,7 @@ export default makeScene2D(function* (view) {
   yield* waitUntil('arrows');
 
   for(let i = 0; i < 4; i++){
-    view.add(
+    candidateGroup().add(
       <Line
         lineCap='round'
         endArrow={true}
@@ -73,5 +80,7 @@ export default makeScene2D(function* (view) {
     yield* lines[i].end(1, .5, easeOutQuad)
   }
 
-  candidates[0].win();
+  yield* candidates[0].win();
+
+  yield* waitUntil('condorcetEnd');
 });

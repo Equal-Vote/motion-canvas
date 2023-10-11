@@ -1,7 +1,7 @@
-import { Img, ImgProps, Length, Txt } from "@motion-canvas/2d";
-import { SignalValue, SimpleSignal, createRef, makeRef } from "@motion-canvas/core";
+import { Img, ImgProps, Length, Line, Txt } from "@motion-canvas/2d";
+import { SignalValue, SimpleSignal, all, createRef, makeRef } from "@motion-canvas/core";
 import {initial, signal} from '@motion-canvas/2d/lib/decorators';
-import { BLUE, GOLD, GREEN, RED, PURPLE, BaseFont, ORANGE } from '../constants';
+import { BLUE, GOLD, GREEN, RED, PURPLE, BaseFont, ORANGE, WHITE } from '../constants';
 
 import leia from '../images/leia.jpg';
 import luke from '../images/luke.jpg';
@@ -46,9 +46,8 @@ const WinState = {
     'tbd': 0,
     'win': 1,
     'lost': 2,
+    'spoiler': 3,
 }
-
-
 
 export class Candidate extends Img{
     @initial(WinState.tbd)
@@ -57,7 +56,9 @@ export class Candidate extends Img{
 
     private state: number;
 
-    private texts:Txt[] = [];
+    private winTxt = createRef<Txt>();
+    private spoilerTxt = createRef<Txt>();
+    private spoilerArrow = createRef<Line>();
 
     public constructor(props: CandidateProps){
         super({
@@ -67,28 +68,71 @@ export class Candidate extends Img{
             lineWidth: 20,
             width: props.size,
             height: props.size,
+            layout: false,
         });
 
         this.state = this.initialState();
 
         this.add(
             <>
-                {['Winner', 'Loser'].map((txt, i) => 
                 <Txt
                     {...BaseFont}
-                    position={[0, -140]}
+                    y={-80}
                     opacity={0}
-                    ref={makeRef(this.texts, i+1)}
+                    ref={this.winTxt}
                 >
-                    {txt}
+                    Winner
                 </Txt>
-                )}
+            </>
+        );
+
+        this.add(
+            <>
+                <Txt
+                    {...BaseFont}
+                    position={[-80, -150]}
+                    opacity={0}
+                    ref={this.spoilerTxt}
+                >
+                    Spoiler
+                </Txt>
+                <Line
+                    ref={this.spoilerArrow}
+                    points={[this.spoilerTxt().position, props.position]}
+                    lineWidth={16}
+                    stroke={WHITE}
+                    startOffset={40}
+                    endOffset={90}
+                    endArrow={true}
+                    arrowSize={24}
+                    end={0}
+                />
             </>
         );
     }
 
     public *win(){
-        yield* this.texts[WinState.win].opacity(1, .5);
+        yield* all(
+            this.winTxt().opacity(1, .5),
+            this.winTxt().position.y(-120, .5),
+        );
         this.state = WinState.win;
+    }
+
+    public *resetWin(){
+        yield* all(
+            this.winTxt().opacity(0, .5),
+            this.winTxt().y(-80, .5),
+        );
+        this.state = WinState.tbd;
+    }
+
+    public *spoiler(){
+        yield* all(
+            this.spoilerTxt().opacity(1, .5),
+            this.spoilerArrow().opacity(1, .5),
+            this.spoilerArrow().end(1, .5),
+        );
+        this.state = WinState.spoiler;
     }
 }
