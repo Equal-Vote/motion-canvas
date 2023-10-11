@@ -1,6 +1,8 @@
 import {makeScene2D, Circle, Rect, Line} from '@motion-canvas/2d';
-import {all, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
-import { BLUE, GOLD, GREEN, ORANGE, PURPLE, RED, WHITE, YELLOW } from '../constants';
+import {all, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
+import { BLUE, GOLD, GREEN, RED, WHITE } from '../constants';
+import { Candidate } from '../components/Candidate';
+import leia from '../images/leia.jpg';
 
 
 const radialPosition = (r : number, angle : number) => {
@@ -24,6 +26,12 @@ export default makeScene2D(function* (view) {
         width={1920}
         height={1080}
         fill='#111111'
+      />
+      <Candidate
+        position={[0, 0]}
+        size={200}
+        src={leia}
+        stroke={GOLD}
       />
       {range(5).map(i => 
           <Circle
@@ -50,7 +58,7 @@ export default makeScene2D(function* (view) {
         lineCap='round'
         endArrow={true}
         arrowSize={32}
-        points={[circles[i+1].position, circles[0].position]}
+        points={[circles[0].position, circles[i+1].position]}
         ref={makeRef(lines, i)}
         lineWidth={16}
         stroke='#080808'
@@ -59,6 +67,6 @@ export default makeScene2D(function* (view) {
         end={0}
       />
     )
-    yield* lines[i].end(1, 1)
+    yield* lines[i].end(1, .5, easeOutQuad)
   }
 });
