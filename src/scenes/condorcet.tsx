@@ -1,9 +1,12 @@
 import {makeScene2D, Circle, Rect, Line, Txt} from '@motion-canvas/2d';
-import {all, createRef, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
+import {all, createRef, easeInCubic, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
 import { BLUE, GOLD, GREEN, RED, TitleFont, WHITE } from '../constants';
 import { Candidate } from '../components/Candidate';
 import leia from '../images/leia.jpg';
-
+import luke from '../images/luke.jpg';
+import vader from '../images/vader.jpg';
+import solo from '../images/solo.jpg';
+import c3po from '../images/c3po.jpg';
 
 const radialPosition = (r : number, angle : number) => {
   return {
@@ -15,11 +18,11 @@ const radialPosition = (r : number, angle : number) => {
 export default makeScene2D(function* (view) {
   const logger = useLogger();
 
-  let circles: Circle[] = [];
+  let candidates: Candidate[] = [];
   let lines: Line[] = [];
   let title = createRef<Txt>();
-  let leiaRef = createRef<Candidate>();
   const colors = [GOLD, GREEN, BLUE, RED, WHITE];
+  const images = [leia, luke, solo, vader, c3po]
 
   view.add(
     <>
@@ -37,34 +40,24 @@ export default makeScene2D(function* (view) {
       >
         Condorcet Winner
       </Txt>
-      <Candidate
-        position={[0, 0]}
-        size={200}
-        src={leia}
-        stroke={GOLD}
-        ref={leiaRef} 
-      />
       {range(5).map(i => 
-          <Circle
+          <Candidate
             position={[0,0]}
-            ref={makeRef(circles, i)}
-            width={140}
-            height={140}
-            fill={colors[i]}
+            ref={makeRef(candidates, i)}
+            src={images[i]}
+            size={140}
+            stroke={colors[i]}
             opacity={0}
           />
       )}
     </>
   );
 
-  yield* leiaRef().win();
-
-
   yield* title().opacity(1, 1);
   yield* all(
-    ...circles.map((circle, i) => [
-        circle.position({...radialPosition(300, 90-i*(360 / circles.length))}, 1),
-        circle.opacity(1, 1)
+    ...candidates.map((candidate, i) => [
+        candidate.position({...radialPosition(300, 90-i*(360 / candidates.length))}, 1, easeOutCubic),
+        candidate.opacity(1, 1, easeOutCubic)
     ]).flat()
   );
   yield* waitUntil('arrows');
@@ -75,10 +68,10 @@ export default makeScene2D(function* (view) {
         lineCap='round'
         endArrow={true}
         arrowSize={32}
-        points={[circles[0].position, circles[i+1].position]}
+        points={[candidates[0].position, candidates[i+1].position]}
         ref={makeRef(lines, i)}
         lineWidth={16}
-        stroke='#080808'
+        stroke={WHITE}
         startOffset={100}
         endOffset={100}
         end={0}
@@ -87,4 +80,5 @@ export default makeScene2D(function* (view) {
     yield* lines[i].end(1, .5, easeOutQuad)
   }
 
+  candidates[0].win();
 });
