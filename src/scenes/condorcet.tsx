@@ -1,12 +1,7 @@
 import {makeScene2D, Circle, Rect, Line, Txt} from '@motion-canvas/2d';
 import {all, createRef, easeInCubic, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
-import { BLUE, GOLD, GREEN, RED, TitleFont, WHITE } from '../constants';
+import { TitleFont, WHITE } from '../constants';
 import { Candidate } from '../components/Candidate';
-import leia from '../images/leia.jpg';
-import luke from '../images/luke.jpg';
-import vader from '../images/vader.jpg';
-import solo from '../images/solo.jpg';
-import c3po from '../images/c3po.jpg';
 
 const radialPosition = (r : number, angle : number) => {
   return {
@@ -21,8 +16,7 @@ export default makeScene2D(function* (view) {
   let candidates: Candidate[] = [];
   let lines: Line[] = [];
   let title = createRef<Txt>();
-  const colors = [GOLD, GREEN, BLUE, RED, WHITE];
-  const images = [leia, luke, solo, vader, c3po]
+  const candidateNames = ['leia', 'luke', 'solo', 'vader', 'c3po'];
 
   view.add(
     <>
@@ -44,10 +38,9 @@ export default makeScene2D(function* (view) {
           <Candidate
             position={[0,0]}
             ref={makeRef(candidates, i)}
-            src={images[i]}
             size={140}
-            stroke={colors[i]}
             opacity={0}
+            candidateName={candidateNames[i]}
           />
       )}
     </>
