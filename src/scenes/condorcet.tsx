@@ -1,6 +1,6 @@
-import {makeScene2D, Circle, Rect, Line} from '@motion-canvas/2d';
-import {all, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
-import { BLUE, GOLD, GREEN, RED, WHITE } from '../constants';
+import {makeScene2D, Circle, Rect, Line, Txt} from '@motion-canvas/2d';
+import {all, createRef, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
+import { BLUE, GOLD, GREEN, RED, TitleFont, WHITE } from '../constants';
 import { Candidate } from '../components/Candidate';
 import leia from '../images/leia.jpg';
 
@@ -17,6 +17,8 @@ export default makeScene2D(function* (view) {
 
   let circles: Circle[] = [];
   let lines: Line[] = [];
+  let title = createRef<Txt>();
+  let leiaRef = createRef<Candidate>();
   const colors = [GOLD, GREEN, BLUE, RED, WHITE];
 
   view.add(
@@ -27,11 +29,20 @@ export default makeScene2D(function* (view) {
         height={1080}
         fill='#111111'
       />
+      <Txt
+        {...TitleFont}
+        position={[0, -450]}
+        opacity={0}
+        ref={title}
+      >
+        Condorcet Winner
+      </Txt>
       <Candidate
         position={[0, 0]}
         size={200}
         src={leia}
         stroke={GOLD}
+        ref={leiaRef} 
       />
       {range(5).map(i => 
           <Circle
@@ -40,14 +51,20 @@ export default makeScene2D(function* (view) {
             width={140}
             height={140}
             fill={colors[i]}
+            opacity={0}
           />
       )}
     </>
   );
 
-  yield all(
+  yield* leiaRef().win();
+
+
+  yield* title().opacity(1, 1);
+  yield* all(
     ...circles.map((circle, i) => [
-        circle.position({...radialPosition(300, 90-i*(360 / circles.length))}, 1)
+        circle.position({...radialPosition(300, 90-i*(360 / circles.length))}, 1),
+        circle.opacity(1, 1)
     ]).flat()
   );
   yield* waitUntil('arrows');
@@ -69,4 +86,5 @@ export default makeScene2D(function* (view) {
     )
     yield* lines[i].end(1, .5, easeOutQuad)
   }
+
 });
