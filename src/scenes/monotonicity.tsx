@@ -1,6 +1,6 @@
 import {Layout, Line, makeScene2D, Rect, Txt} from '@motion-canvas/2d';
 import {all, createRef, linear, makeRef, waitUntil } from '@motion-canvas/core';
-import { BaseFont, BKGGRAY, DKGRAY, TitleFont } from '../constants';
+import { BaseFont, BLACK, DKGRAY, TitleFont } from '../constants';
 import { Candidate } from '../components/Candidate';
 
 export default makeScene2D(function* (view) {
@@ -18,7 +18,7 @@ export default makeScene2D(function* (view) {
         position={[0, 0]}
         width={1920}
         height={1080}
-        fill={BKGGRAY}
+        fill={BLACK}
       />
       <Txt
         {...TitleFont}
@@ -56,7 +56,7 @@ export default makeScene2D(function* (view) {
       />
       <Txt
         {...BaseFont}
-        fill={BKGGRAY}
+        fill={BLACK}
         position={[0, -70]}
         opacity={1}
         ref={gainSupport}
@@ -66,7 +66,7 @@ export default makeScene2D(function* (view) {
       </Txt>
       <Txt
         {...BaseFont}
-        fill={BKGGRAY}
+        fill={BLACK}
         position={[0, 90]}
         opacity={0}
         ref={loseSupport}

@@ -1,6 +1,6 @@
 import {Layout, makeScene2D, Rect, Txt} from '@motion-canvas/2d';
 import {all, createRef, linear, makeRef, waitUntil } from '@motion-canvas/core';
-import { TitleFont } from '../constants';
+import { BLACK, TitleFont } from '../constants';
 import { Candidate } from '../components/Candidate';
 
 export default makeScene2D(function* (view) {
@@ -15,7 +15,7 @@ export default makeScene2D(function* (view) {
         position={[0, 0]}
         width={1920}
         height={1080}
-        fill='#111111'
+        fill={BLACK}
       />
       <Txt
         {...TitleFont}

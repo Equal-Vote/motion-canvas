@@ -1,6 +1,6 @@
 import {makeScene2D, Circle, Rect, Line, Txt} from '@motion-canvas/2d';
 import {all, createRef, easeInCubic, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
-import { TitleFont, WHITE } from '../constants';
+import { BLACK, TitleFont, WHITE } from '../constants';
 import { Candidate } from '../components/Candidate';
 
 const radialPosition = (r : number, angle : number) => {
@@ -23,7 +23,7 @@ export default makeScene2D(function* (view) {
         position={[0, 0]}
         width={1920}
         height={1080}
-        fill='#111111'
+        fill={BLACK}
       />
       <Txt
         {...TitleFont}
