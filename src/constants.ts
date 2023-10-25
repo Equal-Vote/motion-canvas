@@ -7,6 +7,8 @@ export const ORANGE = '#FF9900';
 export const GREEN = '#60B33C';
 export const BLACK = '#000000';
 export const WHITE = '#FFFFFF';
+export const DKGRAY = '#202020';
+export const BKGGRAY = '#111111';
 
 export const BaseFont = {
     fontFamily: 'Monserrat',
