@@ -1,5 +1,5 @@
 import { Img, ImgProps, Length, Line, Txt } from "@motion-canvas/2d";
-import { SignalValue, SimpleSignal, all, createRef, makeRef } from "@motion-canvas/core";
+import { SignalValue, SimpleSignal, all, chain, createRef, easeOutCubic, makeRef } from "@motion-canvas/core";
 import {initial, signal} from '@motion-canvas/2d/lib/decorators';
 import { BLUE, GOLD, GREEN, RED, PURPLE, BaseFont, ORANGE, WHITE } from '../constants';
 
@@ -8,6 +8,9 @@ import luke from '../images/luke.jpg';
 import vader from '../images/vader.jpg';
 import solo from '../images/solo.jpg';
 import c3po from '../images/c3po.jpg';
+import bush from '../images/bush.jpg';
+import nader from '../images/nader.jpg';
+import gore from '../images/gore.jpg';
 
 export interface CandidateSpecs{
     src: string,
@@ -24,6 +27,10 @@ const candidates: Record<string, CandidateSpecs> = {
         src: leia,
         stroke: ORANGE  
     },
+    'gore': {
+        src: gore,
+        stroke: ORANGE  
+    },
     'luke': {
         src: luke,
         stroke: GREEN,
@@ -32,12 +39,20 @@ const candidates: Record<string, CandidateSpecs> = {
         src: solo,
         stroke: PURPLE,
     },
+    'bush': {
+        src: bush,
+        stroke: PURPLE,
+    },
     'vader': {
         src: vader,
         stroke: RED,
     },
     'c3po': {
         src: c3po,
+        stroke: BLUE,
+    },
+    'nader': {
+        src: nader,
         stroke: BLUE,
     },
 }
@@ -118,6 +133,14 @@ export class Candidate extends Img{
                 />
             </>
         );
+    }
+
+    public *refresh(newName : string){
+        yield* all(
+            this.src(candidates[newName].src, 0),
+            this.stroke(candidates[newName].stroke, 0),
+            chain(this.scale(1.2,0), this.scale(1, 1, easeOutCubic))
+        )
     }
 
     public *win(){

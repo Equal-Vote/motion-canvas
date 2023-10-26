@@ -1,5 +1,5 @@
 import {Layout, makeScene2D, Rect, Txt} from '@motion-canvas/2d';
-import {all, createRef, linear, makeRef, waitUntil } from '@motion-canvas/core';
+import {all, createRef, delay, linear, makeRef, waitFor, waitUntil } from '@motion-canvas/core';
 import { BLACK, TitleFont } from '../constants';
 import { Candidate } from '../components/Candidate';
 
@@ -85,5 +85,15 @@ export default makeScene2D(function* (view) {
 
   yield* candidates[0].spoiler();
 
+  yield* waitFor(2);
+
+  yield* all(
+    candidates[0].refresh('nader'),
+    delay(.2, candidates[1].refresh('gore')),
+    delay(.4, candidates[2].refresh('bush')),
+  )
+
   yield* waitUntil('spoilerEnd');
+
+
 });

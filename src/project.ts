@@ -8,9 +8,9 @@ import allElections from './scenes/allElections?scene';
 
 export default makeProject({
   scenes: [
-    allElections,
+    //allElections,
     //condorcet,
-    //spoiler,
+    spoiler,
     //monotonicity,
     //claims
   ],
