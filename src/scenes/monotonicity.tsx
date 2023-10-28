@@ -26,7 +26,7 @@ export default makeScene2D(function* (view) {
         ref={candidate} 
         candidateName={'luke'}
         size={140}
-        opacity={1}
+        opacity={0}
         y={200}
         zIndex={1}
       />
@@ -73,7 +73,8 @@ export default makeScene2D(function* (view) {
 
   yield* all(
     title().opacity(1, 1),
-    title().y(-450, 1)
+    title().y(-450, 1),
+    candidate().opacity(1, 1),
   );
 
   yield* candidate().win();

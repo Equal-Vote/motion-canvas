@@ -73,11 +73,11 @@ export default makeScene2D(function* (view) {
     bars[1].width(420, t),
   );
 
-  yield* candidates[2].win();
+  yield* candidates[0].spoiler();
 
   yield* waitFor(2);
 
-  yield* candidates[0].spoiler();
+  yield* candidates[2].win();
 
   yield* waitFor(2);
 

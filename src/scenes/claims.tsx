@@ -27,7 +27,18 @@ export default makeScene2D(function* (view) {
     //  return c;
     //})(),
 
-    return chain(all(...circles.map((circle, i) => {
+    return chain(
+      all(
+        title().opacity(1, 1),
+        title().y(-400, 1),
+        all(...circles.map((circle, i) =>
+          delay(.1*(i+1), all(
+            circle.y(claimY, 1, easeOutCubic), circle.opacity(1, 1)))
+          )
+        ),
+      ),
+      waitFor(.5),
+      all(...circles.map((circle, i) => {
         if(i == index){
           return all(
             circle.scale(bigScale, 1),
@@ -43,13 +54,17 @@ export default makeScene2D(function* (view) {
   }
 
   const reset = () => {
-    return chain(all(...circles.map((circle, i) => all(
-      circle.scale(1, 1),
-      circle.opacity(1, 1),
-      circle.x(claimX + (claimSize+claimGap)*i, 1),
-      circle.y(claimY, 1),
-      circle.zIndex(0, 0),
-    ))), waitFor(2));
+    return chain(
+      title().opacity(0, 0),
+      all(...circles.map((circle, i) => all(
+        circle.scale(1, 0),
+        circle.opacity(0, 0),
+        circle.x(claimX + (claimSize+claimGap)*i, 0),
+        circle.y(claimY + 100, 0),
+        circle.zIndex(0, 0),
+      ))),
+      waitFor(2)
+    );
   }
 
 
@@ -83,16 +98,6 @@ export default makeScene2D(function* (view) {
     </>
   );
 
-  yield* all(
-    title().opacity(1, 1),
-    title().y(-400, 1),
-    all(...circles.map((circle, i) =>
-      delay(.1*(i+1), all(
-        circle.y(claimY, 1, easeOutCubic), circle.opacity(1, 1)))
-      )
-    )
-  );
-
   yield* waitFor(2);
 
   yield* focus(1);
@@ -112,4 +117,6 @@ export default makeScene2D(function* (view) {
   yield* reset();
 
   yield* focus(5);
+
+  yield* reset();
 });
