@@ -8,10 +8,10 @@ import allElections from './scenes/allElections?scene';
 
 export default makeProject({
   scenes: [
-    //allElections,
-    //condorcet,
+    condorcet,
     spoiler,
-    //monotonicity,
-    //claims
+    monotonicity,
+    //claims,
+    allElections,
   ],
 });

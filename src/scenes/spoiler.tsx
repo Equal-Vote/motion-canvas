@@ -11,19 +11,13 @@ export default makeScene2D(function* (view) {
 
   view.add(
     <>
-      <Rect
-        position={[0, 0]}
-        width={1920}
-        height={1080}
-        fill={BLACK}
-      />
       <Txt
         {...TitleFont}
         position={[0, -400]}
         opacity={0}
         ref={title}
       >
-        Spoiler Candidate
+        Spoiler Effect
       </Txt>
       <Rect
         direction={'row'}
@@ -69,7 +63,7 @@ export default makeScene2D(function* (view) {
 
   yield* candidates[1].win();
 
-  yield* waitUntil('resetWin');
+  yield* waitFor(2);
   yield* candidates[1].resetWin();
 
   let t = 1;
@@ -81,7 +75,7 @@ export default makeScene2D(function* (view) {
 
   yield* candidates[2].win();
 
-  yield* waitUntil('spoilerText');
+  yield* waitFor(2);
 
   yield* candidates[0].spoiler();
 
@@ -93,7 +87,7 @@ export default makeScene2D(function* (view) {
     delay(.4, candidates[2].refresh('bush')),
   )
 
-  yield* waitUntil('spoilerEnd');
+  yield* waitFor(2);
 
 
 });

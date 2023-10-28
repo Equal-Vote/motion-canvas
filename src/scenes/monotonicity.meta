@@ -1,18 +1,5 @@
 {
   "version": 0,
-  "timeEvents": [
-    {
-      "name": "gainSupportMovement",
-      "targetTime": 2.7887665061297
-    },
-    {
-      "name": "loseSupportMovement",
-      "targetTime": 5.093575595933272
-    },
-    {
-      "name": "monotonicityEnd",
-      "targetTime": 6.908541303431707
-    }
-  ],
+  "timeEvents": [],
   "seed": 3412554199
 }

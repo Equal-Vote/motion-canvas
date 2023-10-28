@@ -1,5 +1,5 @@
 import {makeScene2D, Circle, Rect, Line, Txt} from '@motion-canvas/2d';
-import {all, createRef, easeInCubic, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitUntil} from '@motion-canvas/core';
+import {all, createRef, easeInCubic, easeOutCubic, easeOutQuad, makeRef, range, useLogger, waitFor, waitUntil} from '@motion-canvas/core';
 import { BLACK, TitleFont, WHITE } from '../constants';
 import { Candidate } from '../components/Candidate';
 
@@ -19,12 +19,6 @@ export default makeScene2D(function* (view) {
 
   view.add(
     <>
-      <Rect
-        position={[0, 0]}
-        width={1920}
-        height={1080}
-        fill={BLACK}
-      />
       <Txt
         {...TitleFont}
         position={[0, -400]}
@@ -60,7 +54,7 @@ export default makeScene2D(function* (view) {
         candidate.opacity(1, 1, easeOutCubic)
     ]).flat()
   );
-  yield* waitUntil('arrows');
+  yield* waitFor(2);
 
   for(let i = 0; i < 4; i++){
     candidateGroup().add(
@@ -82,5 +76,5 @@ export default makeScene2D(function* (view) {
 
   yield* candidates[0].win();
 
-  yield* waitUntil('condorcetEnd');
+  yield* waitFor(2);
 });

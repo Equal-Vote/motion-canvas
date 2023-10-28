@@ -1,18 +1,5 @@
 {
   "version": 0,
-  "timeEvents": [
-    {
-      "name": "resetWin",
-      "targetTime": 2.795484525621512
-    },
-    {
-      "name": "spoilerText",
-      "targetTime": 5.140216472179944
-    },
-    {
-      "name": "spoilerEnd",
-      "targetTime": 10.07352774076337
-    }
-  ],
+  "timeEvents": [],
   "seed": 2939814604
 }

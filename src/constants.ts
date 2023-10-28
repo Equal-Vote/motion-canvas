@@ -11,9 +11,9 @@ export const DKGRAY = '#202020';
 export const BKGGRAY = '#111111';
 
 export const BaseFont = {
-    fontFamily: 'Monserrat',
+    fontFamily: 'Monserrat, sans-serif',
     fill: WHITE,
-    fontWeight: 700,
+    fontWeight: 900,
 }
 
 export const TitleFont = {

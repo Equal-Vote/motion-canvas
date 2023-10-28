@@ -1,5 +1,5 @@
 import {Layout, Line, makeScene2D, Rect, Txt} from '@motion-canvas/2d';
-import {all, createRef, linear, makeRef, waitUntil } from '@motion-canvas/core';
+import {all, createRef, linear, makeRef, waitFor, waitUntil } from '@motion-canvas/core';
 import { BaseFont, BLACK, DKGRAY, TitleFont } from '../constants';
 import { Candidate } from '../components/Candidate';
 
@@ -14,12 +14,6 @@ export default makeScene2D(function* (view) {
 
   view.add(
     <>
-      <Rect
-        position={[0, 0]}
-        width={1920}
-        height={1080}
-        fill={BLACK}
-      />
       <Txt
         {...TitleFont}
         position={[0, -400]}
@@ -86,7 +80,7 @@ export default makeScene2D(function* (view) {
 
   yield* gainArrow().opacity(1, .5);
 
-  yield* waitUntil('gainSupportMovement')
+  yield* waitFor(2);
 
   yield* all(
     candidate().resetWin(),
@@ -101,7 +95,7 @@ export default makeScene2D(function* (view) {
 
   yield* loseArrow().opacity(1, .5);
 
-  yield* waitUntil('loseSupportMovement')
+  yield* waitFor(2);
 
   yield* all(
     candidate().resetLose(),
@@ -111,6 +105,6 @@ export default makeScene2D(function* (view) {
 
   yield* candidate().win();
 
-  yield* waitUntil('monotonicityEnd')
+  yield* waitFor(2)
 });
 

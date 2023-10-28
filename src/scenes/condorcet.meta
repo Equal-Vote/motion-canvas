@@ -1,14 +1,5 @@
 {
   "version": 0,
-  "timeEvents": [
-    {
-      "name": "arrows",
-      "targetTime": 2.2298447488584476
-    },
-    {
-      "name": "condorcetEnd",
-      "targetTime": 5.401334650109294
-    }
-  ],
+  "timeEvents": [],
   "seed": 3124355241
 }
