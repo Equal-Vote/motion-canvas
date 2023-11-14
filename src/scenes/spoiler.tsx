@@ -63,7 +63,7 @@ export default makeScene2D(function* (view) {
 
   yield* candidates[1].win();
 
-  yield* waitFor(2);
+  yield* waitFor(.5);
   yield* candidates[1].resetWin();
 
   let t = 1;
@@ -75,19 +75,19 @@ export default makeScene2D(function* (view) {
 
   yield* candidates[0].spoiler();
 
-  yield* waitFor(2);
+  yield* waitFor(.5);
 
   yield* candidates[2].win();
 
   yield* waitFor(2);
 
-  yield* all(
-    candidates[0].refresh('nader'),
-    delay(.2, candidates[1].refresh('gore')),
-    delay(.4, candidates[2].refresh('bush')),
-  )
+  //yield* all(
+  //  candidates[0].refresh('nader'),
+  //  delay(.2, candidates[1].refresh('gore')),
+  //  delay(.4, candidates[2].refresh('bush')),
+  //)
 
-  yield* waitFor(2);
+  //yield* waitFor(2);
 
 
 });

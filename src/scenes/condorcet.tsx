@@ -54,7 +54,7 @@ export default makeScene2D(function* (view) {
         candidate.opacity(1, 1, easeOutCubic)
     ]).flat()
   );
-  yield* waitFor(2);
+  yield* waitFor(.5);
 
   for(let i = 0; i < 4; i++){
     candidateGroup().add(

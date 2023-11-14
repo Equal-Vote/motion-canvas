@@ -81,7 +81,7 @@ export default makeScene2D(function* (view) {
 
   yield* gainArrow().opacity(1, .5);
 
-  yield* waitFor(2);
+  yield* waitFor(1);
 
   yield* all(
     candidate().resetWin(),
@@ -96,7 +96,7 @@ export default makeScene2D(function* (view) {
 
   yield* loseArrow().opacity(1, .5);
 
-  yield* waitFor(2);
+  yield* waitFor(1);
 
   yield* all(
     candidate().resetLose(),

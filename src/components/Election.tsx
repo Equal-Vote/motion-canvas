@@ -21,7 +21,7 @@ export class Election extends Circle{
         };
 
         this.add(
-            <Node ref={this.X} opacity={0} scale={2}>
+            <Node ref={this.X} opacity={0} scale={1.5}>
                 <Line
                     ref={makeRef(this.lines, 0)}
                     {...lineProps}
@@ -43,12 +43,19 @@ export class Election extends Circle{
     }
 
     public *redX(){
-        let t = .7;
+        let t = .6;
         yield* all(
             this.X().scale(1, t, easeOutCubic),
             this.X().opacity(1, t, easeOutCubic),
             this.lines[0].stroke(RED, t),
             this.lines[1].stroke(RED, t),
+        );
+    }
+
+    
+    public *invisibleX(){
+        yield* all(
+            this.X().opacity(0, 0),
         );
     }
 

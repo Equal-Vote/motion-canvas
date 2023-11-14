@@ -9,7 +9,7 @@ export default makeScene2D(function* (view) {
   let electionCount=448;
   let electionSize=50;
   let electionGap=10;
-  let electionColumns = 30;
+  let electionColumns=30;
   let electionX = -((electionColumns-1)*(electionSize+electionGap)) / 2;
   let electionY = -((Math.ceil(electionCount/electionColumns)-1)*(electionSize+electionGap)) / 2;
 
@@ -29,9 +29,13 @@ export default makeScene2D(function* (view) {
   );
 
   yield* waitFor(2)
-  yield* all(...elections.slice(0, 11).map((election, i) => delay(.08*i, election.redX())));
+  yield* all(...elections.slice(0, 197).map((election, i) => delay(/*.5*Math.random()*/.08*((i % electionColumns) + Math.floor(i / electionColumns)), election.redX())));
+  yield* waitFor(2)
+  yield* all(...elections.slice(11, 197).reverse().map((election, i) => delay(.005*i, election.grayX())));
   yield* waitFor(2)
   yield* all(...elections.slice(3, 11).reverse().map((election, i) => delay(.12*i, election.grayX())));
+  yield* waitFor(2)
+  yield* all(...elections.slice(3, 197).map((election, i) => election.invisibleX()));
   yield* waitFor(2)
   yield* all(...elections.slice(313).reverse().map((election, i) => delay(.1*Math.floor((i+2) / electionColumns), election.uncompetitive())));
   yield* waitFor(2)
