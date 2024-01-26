@@ -72,6 +72,7 @@ export class Candidate extends Img{
     private state: number;
 
     private winTxt = createRef<Txt>();
+    private majorityWinTxt = createRef<Txt>();
     private loseTxt = createRef<Txt>();
     private spoilerTxt = createRef<Txt>();
     private spoilerArrow = createRef<Line>();
@@ -98,6 +99,14 @@ export class Candidate extends Img{
                     ref={this.winTxt}
                 >
                     Winner
+                </Txt>
+                <Txt
+                    {...BaseFont}
+                    y={-80}
+                    opacity={0}
+                    ref={this.majorityWinTxt}
+                >
+                    Majority Winner
                 </Txt>
                 <Txt
                     {...BaseFont}
@@ -155,6 +164,22 @@ export class Candidate extends Img{
         yield* all(
             this.winTxt().opacity(0, .5),
             this.winTxt().y(-80, .5),
+        );
+        this.state = WinState.tbd;
+    }
+
+    public *majorityWin(){
+        yield* all(
+            this.majorityWinTxt().opacity(1, .5),
+            this.majorityWinTxt().position.y(-120, .5),
+        );
+        this.state = WinState.win;
+    }
+
+    public *resetMajorityWin(){
+        yield* all(
+            this.majorityWinTxt().opacity(0, .5),
+            this.majorityWinTxt().y(-80, .5),
         );
         this.state = WinState.tbd;
     }
