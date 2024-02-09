@@ -23,22 +23,27 @@ export default makeScene2D(function* (view) {
             electionX+((i%electionColumns)*(electionSize+electionGap)),
             electionY+(Math.floor(i/electionColumns)*(electionSize+electionGap))
           ]}
+          opacity={0}
+          scale={.8}
         />
       )}
     </>
   );
 
-  yield* waitFor(2)
-  yield* all(...elections.slice(0, 197).map((election, i) => delay(/*.5*Math.random()*/.08*((i % electionColumns) + Math.floor(i / electionColumns)), election.redX())));
-  yield* waitFor(2)
+  yield* waitFor(1)
+  yield* all(...elections.map((election, i) => delay(Math.random(), all(election.opacity(1, .1), election.scale(1, .1)))));
+  //yield* all(...elections.map((election, i) => delay(.08*((i % electionColumns) + Math.floor(i / electionColumns)), all(election.opacity(1, .1), election.scale(1, .2)))));
+  yield* waitFor(1)
+  yield* all(...elections.slice(0, 197).map((election, i) => delay(.06*((i % electionColumns) + Math.floor(i / electionColumns)), election.redX())));
+  yield* waitFor(1)
   yield* all(...elections.slice(11, 197).reverse().map((election, i) => delay(.005*i, election.grayX())));
-  yield* waitFor(2)
+  yield* waitFor(1)
   yield* all(...elections.slice(3, 11).reverse().map((election, i) => delay(.12*i, election.grayX())));
-  yield* waitFor(2)
+  yield* waitFor(1)
   yield* all(...elections.slice(3, 197).map((election, i) => election.invisibleX()));
-  yield* waitFor(2)
+  yield* waitFor(1)
   yield* all(...elections.slice(313).reverse().map((election, i) => delay(.1*Math.floor((i+2) / electionColumns), election.uncompetitive())));
-  yield* waitFor(2)
+  yield* waitFor(1)
   yield* all(...elections.slice(88,313).reverse().map((election, i) => delay(.1*Math.floor((i+2) / electionColumns), election.uncompetitive())));
-  yield* waitFor(2)
+  yield* waitFor(1)
 });

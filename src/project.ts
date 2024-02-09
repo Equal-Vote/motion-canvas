@@ -7,15 +7,17 @@ import monotonicity from './scenes/monotonicity?scene';
 import claims from './scenes/claims?scene';
 import allElections from './scenes/allElections?scene';
 import states from './scenes/states?scene';
+import parties from './scenes/parties?scene';
 
 export default makeProject({
   scenes: [
     //condorcet,
     //spoiler,
-    spoiler2000,
+    //spoiler2000,
     //monotonicity,
     //claims,
     //allElections,
-    //states
+    //states,
+    parties
   ],
 });
