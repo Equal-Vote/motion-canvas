@@ -17,7 +17,7 @@ export default makeProject({
     //monotonicity,
     //claims,
     //allElections,
-    //states,
-    parties
+    states,
+    //parties
   ],
 });
