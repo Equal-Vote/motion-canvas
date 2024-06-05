@@ -69,7 +69,7 @@ export class Election extends Circle{
     public *uncompetitive(){
         let t = .4;
         yield* all(
-            this.opacity(.3, t)
+            this.opacity(.4, t)
         );
     }
 }

@@ -16,8 +16,8 @@ export default makeProject({
     //spoiler2000,
     //monotonicity,
     //claims,
-    //allElections,
-    states,
+    allElections,
+    //states,
     //parties
   ],
 });
