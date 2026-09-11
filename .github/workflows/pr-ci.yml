@@ -1,0 +1,49 @@
+# Build check for pull requests.
+#
+# Without this, nothing verifies a pull request at all -- the only other
+# workflow runs on push to the default branch, after the merge. That makes
+# dependency bumps unreviewable in practice: the PR looks green because
+# nothing is checking it.
+#
+# Actions are pinned by commit SHA rather than tag, matching the convention
+# already used elsewhere in this org and required by the zizmor audit.
+#
+# NOTE: this check is red on the default branch today. `npm run build` fails
+# on pre-existing TypeScript errors in src/scenes/claims.tsx (TS2322) and
+# src/scenes/newFile.tsx (TS2322, TS2786) -- not caused by this workflow.
+# Those need fixing before this check can gate anything.
+name: PR CI
+
+"on":
+  pull_request:
+
+# Read-only: this workflow never needs to write to the repo.
+permissions:
+  contents: read
+
+# A new push to a PR makes the in-flight run redundant.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # checkout leaves the job token in .git/config unless told
+          # otherwise. Nothing here pushes, so drop it (zizmor:
+          # artipacked).
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
