@@ -7,11 +7,6 @@
 #
 # Actions are pinned by commit SHA rather than tag, matching the convention
 # already used elsewhere in this org and required by the zizmor audit.
-#
-# NOTE: this check is red on the default branch today. `npm run build` fails
-# on pre-existing TypeScript errors in src/scenes/claims.tsx (TS2322) and
-# src/scenes/newFile.tsx (TS2322, TS2786) -- not caused by this workflow.
-# Those need fixing before this check can gate anything.
 name: PR CI
 
 "on":
