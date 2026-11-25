@@ -91,7 +91,7 @@ export default makeScene2D(function* (view) {
           opacity={0}
         >
           <Txt {...TitleFont} fontSize={80} textAlign='center' marginTop={30} width={'100%'}>
-            {i+1}
+            {`${i+1}`}
           </Txt>
         </Circle>
       )}
